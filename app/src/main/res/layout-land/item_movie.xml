@@ -7,31 +7,35 @@
     android:layout_margin="5dp">
 
     <ImageView
-        android:id="@+id/ivPosterImage"
-        android:layout_width="100dp"
-        android:layout_height="150dp"
+        android:id="@+id/ivbackdropImage"
+        android:layout_width="480dp"
+        android:layout_height="360dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tvTitle"
         app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvOverview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:color/black" />
+        tools:srcCompat="@tools:sample/avatars[14]" />
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Movie Title"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#f0f0f0"
         app:layout_constraintBottom_toTopOf="@+id/tvOverview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivPosterImage"
+        app:layout_constraintStart_toEndOf="@+id/ivbackdropImage"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -41,11 +45,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:text="Overview of the movie."
+        android:text="TextView"
         android:textColor="#f0f0f0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/ivPosterImage"
+        app:layout_constraintStart_toEndOf="@+id/ivbackdropImage"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 </android.support.constraint.ConstraintLayout>

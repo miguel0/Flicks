@@ -1,12 +1,18 @@
 package com.example.flicks;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.example.flicks.models.Config;
 import com.example.flicks.models.Movie;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -32,14 +38,14 @@ public class MainActivity extends AppCompatActivity {
 
     // INSTANCE FIELDS
     AsyncHttpClient client;
-    String imageBaseUrl;
-    String posterSize;
     // current movies
     ArrayList<Movie> movies;
     // recycler view
     RecyclerView rvMovies;
     // adapter for recycler view
     MovieAdapter adapter;
+    // image config
+    Config config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +56,19 @@ public class MainActivity extends AppCompatActivity {
         movies = new ArrayList<>();
         adapter = new MovieAdapter(movies);
         rvMovies = (RecyclerView) findViewById(R.id.rvMovies);
-        rvMovies.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        rvMovies.setLayoutManager(llm);
         rvMovies.setAdapter(adapter);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvMovies.getContext(), llm.getOrientation());
+        rvMovies.addItemDecoration(dividerItemDecoration);
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.parseColor("#9c5f2a"));
+        }
 
         getConfiguration();
     }
@@ -98,13 +115,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    JSONObject images = response.getJSONObject("images");
-                    // get image base url
-                    imageBaseUrl = images.getString("secure_base_url");
-                    // get poster size
-                    JSONArray posterSizeOptions = images.getJSONArray("poster_sizes");
-                    posterSize = posterSizeOptions.optString(3, "w342");
-                    Log.i(TAG, String.format("Loaded with base url %s and poster size %s.", imageBaseUrl, posterSize));
+                    config = new Config(response);
+                    Log.i(TAG, String.format("Loaded with base url %s and poster size %s.", config.getImageBaseUrl(), config.getPosterSize()));
+                    adapter.setConfig(config);
                     getNowPlaying();
                 } catch (JSONException e) {
                     logError("Failed while parsing configuration.", e, true);
