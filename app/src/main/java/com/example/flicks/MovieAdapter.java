@@ -79,7 +79,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
         Glide.with(context)
                 .load(imageUrl)
                 .bitmapTransform(new RoundedCornersTransformation(context, 15, 1))
-                .placeholder(R.drawable.flicks_movie_placeholder )
+                .placeholder(placeholder)
                 .error(placeholder)
                 .into(imageView);
     }
@@ -118,6 +118,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
                 Movie movie = movies.get(position);
                 Intent intent = new Intent(context, MovieDetailsActivity.class);
                 intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
+                intent.putExtra(Config.class.getSimpleName(), Parcels.wrap(config));
 
                 // start activity with movie details
                 context.startActivity(intent);
