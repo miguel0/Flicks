@@ -92,6 +92,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         // view objects
+
+        // Tried to use ButterKnife
+        /* @BindView(R.id.ivPosterImage) ImageView ivPosterImage;
+        @BindView(R.id.ivbackdropImage) ImageView ivBackdropImage;
+        @BindView(R.id.tvTitle) TextView tvTitle;
+        @BindView(R.id.tvOverview) TextView tvOverview; */
+
         ImageView ivPosterImage;
         ImageView ivBackdropImage;
         TextView tvTitle;
@@ -99,6 +106,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            // ButterKnife.bind(this, itemView);
 
             ivPosterImage = (ImageView) itemView.findViewById(R.id.ivPosterImage);
             ivBackdropImage = (ImageView) itemView.findViewById(R.id.ivbackdropImage);

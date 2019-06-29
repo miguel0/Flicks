@@ -17,6 +17,8 @@ import com.example.flicks.models.Movie;
 
 import org.parceler.Parcels;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MovieDetailsActivity extends AppCompatActivity {
@@ -24,10 +26,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
     Movie movie;
 
     // objects that are viewed
-    TextView tvTitle;
-    TextView tvOverview;
-    RatingBar rbVoteAverage;
-    ImageView imagePic;
+    @BindView(R.id.tvTitle) TextView tvTitle;
+    @BindView(R.id.tvOverview) TextView tvOverview;
+    @BindView(R.id.rbVoteAverage) RatingBar rbVoteAverage;
+    @BindView(R.id.iwDetailPic) ImageView imagePic;
 
     Config config;
 
@@ -36,15 +38,17 @@ public class MovieDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
 
+        ButterKnife.bind(this);
+
         movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
         config = (Config) Parcels.unwrap(getIntent().getParcelableExtra(Config.class.getSimpleName()));
         Log.d("MovieDetailsActivity", String.format("Showing the details for %s", movie.getTitle()));
 
         // assigning the 3 objects
-        tvTitle = (TextView) findViewById(R.id.tvTitle);
+        /* tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvOverview = (TextView) findViewById(R.id.tvOverview);
         rbVoteAverage = (RatingBar) findViewById(R.id.rbVoteAverage);
-        imagePic = (ImageView) findViewById(R.id.iwDetailPic);
+        imagePic = (ImageView) findViewById(R.id.iwDetailPic); */
 
         // setting text for title and overview
         tvTitle.setText(movie.getTitle());
